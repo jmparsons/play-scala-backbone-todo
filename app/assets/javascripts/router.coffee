@@ -2,7 +2,8 @@ define [
   "app",
   "jquery", 
   "underscore", 
-  "backbone"
+  "backbone",
+  "modules/todo"
   
 ], (app, $, _, Backbone) ->
 
@@ -10,5 +11,6 @@ define [
     routes:
       "":           "index"
     index: ->
-      console.log "index"
+      new app.Views.TodoView
+      
   Router

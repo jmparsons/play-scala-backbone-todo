@@ -1,6 +1,14 @@
-@(message: String)
+@(message: String, todos: List[Todo])
 
 @main("Welcome to Play 2.1") {
-    
-   hi
+
+  <div id="todos">
+
+  </div>
+
+  <div id="gtodos">
+    @for(todo <- todos) {
+      <p>@todo.id. @todo.title - @todo.content</p>
+    }
+  </div>
 }
