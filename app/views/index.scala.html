@@ -1,14 +1,29 @@
-@(message: String, todos: List[Todo])
+@(message: String, todos: List[Todo], todoForm: Form[Todo])
 
 @main("Welcome to Play 2.1") {
 
   <div id="todos">
 
+    <div id="todoList">
+
+    </div>
+
+  @helper.form(action = routes.Application.createTodo, 'id -> "todoForm") {
+      
+      @helper.inputText(todoForm("title"))
+      
+      @helper.inputText(todoForm("content"))
+
+      <input type="submit" value="Submit">
+      
+  }
+
   </div>
 
   <div id="gtodos">
-    @for(todo <- todos) {
+    @* @for(todo <- todos) {
       <p>@todo.id. @todo.title - @todo.content</p>
-    }
+    } *@
   </div>
+
 }

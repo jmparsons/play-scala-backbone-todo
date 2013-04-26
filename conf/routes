@@ -7,5 +7,11 @@ GET     /                           controllers.Application.index
 GET     /todos                      controllers.Application.todos
 GET     /todos/:id                  controllers.Application.todoList(id:Long)
 
+POST    /todos                      controllers.Application.createTodo
+
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/javascripts/routes          controllers.Application.javascriptRoutes()
