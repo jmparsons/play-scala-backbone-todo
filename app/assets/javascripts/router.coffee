@@ -1,16 +1,16 @@
 define [
   "app",
-  "jquery", 
-  "underscore", 
+  "jquery",
+  "underscore",
   "backbone",
   "modules/todo"
-  
+
 ], (app, $, _, Backbone) ->
 
   class Router extends Backbone.Router
     routes:
       "":           "index"
     index: ->
-      new app.Views.TodoView
-      
+      new app.Views.TodoListView
+
   Router
