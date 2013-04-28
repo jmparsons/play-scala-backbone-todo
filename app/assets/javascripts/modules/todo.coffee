@@ -1,7 +1,10 @@
 define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
 
   class app.Models.TodoModel extends Backbone.Model
-    url: "/todos"
+    urlRoot: "/todos"
+    defaults:
+      "title":""
+      "content":""
 
   class app.Collections.TodoCollection extends Backbone.Collection
     model: app.Models.TodoModel
@@ -9,38 +12,43 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
 
   class app.Views.TodoView extends Backbone.View
     el: "#todos"
-    template: _.template("<p><%=id%>. <%=title%> - <%=content%></p>")
+    template: _.template('<p><%=id%>. <%=title%> - <%=content%> <a href="#" data-edit-id="<%=id%>">edit</a> <a href="#" data-delete-id="<%=id%>" class="delete">delete</a></p>')
     initialize: ->
-      _.bindAll @
+      _.bindAll @, "render"
       @collection = new app.Collections.TodoCollection
       @collection.fetch success: @render
-    render: =>
+      @collection.bind "add", @render
+      @collection.bind "remove", @render
+    render: ->
       @$el.find("#todoList").empty()
       for todo in @collection.models
         do (todo) =>
           @$el.find("#todoList").append @template(todo.toJSON())
     addTodo: (event) ->
       event.preventDefault()
-      console.log event
-      newTodo = $(event.currentTarget).serializeObject()
-      bob = $(event.currentTarget).serialize()
-      console.log newTodo
-      console.log bob
+      that = @
       todo = new app.Models.TodoModel
-      dude = new app.Models.TodoModel(
         title: $(event.currentTarget).find("#title").val()
         content: $(event.currentTarget).find("#content").val()
-      )
-      console.log dude.toJSON()
-      # todo.save newTodo,
-      todo.save dude.toJSON(),
+      todo.save todo.toJSON(),
         success: (model, response, options) ->
-          console.log model
-          console.log response
-          console.log options
+          console.log model, response, options
+          that.collection.add model
         error: (model, xhr, options) ->
-          console.log model
-          console.log xhr
-          console.log options
-      
-    events: 'submit #todoForm' : 'addTodo'
+          console.log model, xhr, options
+    deleteTodo: (event) ->
+      event.preventDefault()
+      todo = @collection.get $(event.target).data("delete-id")
+      that = @
+      console.log todo
+      console.log @collection.length
+      todo.destroy
+        success: (model, response, options) ->
+          console.log model, response, options
+        error: (model, xhr, options) ->
+          console.log model, xhr, options
+      console.log @collection.length
+    events:
+      'submit #todoForm' : 'addTodo'
+      'click a.delete' : 'deleteTodo'
+

@@ -24,18 +24,26 @@ object Todo {
     }
   }
 
-  def create(todo: Todo) = {
+  def create(todo: Todo): Todo = {
     DB.withConnection { implicit c =>
+
+      val id: Long = todo.id.getOrElse {
+        SQL("select next value for todo_id_seq").as(scalar[Long].single)
+      }
+
       SQL(
         """
-          insert into todo(title, content) values (
-            {title}, {content}
+          insert into todo values (
+            {id}, {title}, {content}
           )
         """
       ).on(
+        'id -> id,
         'title -> todo.title,
         'content -> todo.content
       ).executeUpdate()
+
+      todo.copy(id = Id(id))
     }
   }
 
@@ -51,6 +59,19 @@ object Todo {
         'id -> id,
         'title -> todo.title,
         'content -> todo.content
+      ).executeUpdate()
+    }
+  }
+
+  def delete(id: Long) = {
+    DB.withConnection { implicit c =>
+      SQL(
+        """
+          delete from todo
+          where id = {id}
+        """
+      ).on(
+        'id -> id
       ).executeUpdate()
     }
   }

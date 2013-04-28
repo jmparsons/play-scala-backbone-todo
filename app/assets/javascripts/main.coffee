@@ -7,6 +7,5 @@ require ["domReady", "app", "router"], (domReady, app, Router) ->
     Backbone.history.start
       pushState: true
       root: "/"
-    Backbone.emulateHTTP = true
     # here
     

@@ -22,7 +22,7 @@ object Application extends Controller {
       "content" -> nonEmptyText
     )(Todo.apply)(Todo.unapply)
   )
-  
+
   def index = Action {
     Ok(views.html.index("Todos", Todo.all(), todoForm))
   }
@@ -40,7 +40,7 @@ object Application extends Controller {
       )
     )
   }
-  
+
   def todoList(id: Long) = Action {
     Ok(
       Json.toJson(
@@ -61,17 +61,30 @@ object Application extends Controller {
         BadRequest
       },
       values => {
-        Todo.create(Todo(NotAssigned, values.title, values.content));
-        Ok
+        var todo = Todo.create(Todo(NotAssigned, values.title, values.content));
+        Ok(
+          toJson(
+            Map(
+              "id" -> todo.id.toString,
+              "title" -> todo.title,
+              "content" -> todo.content
+            )
+          )
+        )
       }
     )
+  }
+
+  def deleteTodo(id: Long) = Action {
+    var todo = Todo.delete(id)
+    Ok(java.lang.Boolean.valueOf(todo.toString).toString)
   }
 
   def javascriptRoutes = Action { implicit request =>
     import routes.javascript._
     Ok(
       Routes.javascriptRouter("jsRoutes")(
-        
+
       )
     ).as("text/javascript")
   }
