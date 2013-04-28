@@ -15,7 +15,6 @@ object Todos extends Controller {
   val todoForm = Form(
     mapping(
       "id" -> ignored(NotAssigned:Pk[Long]),
-      "title" -> nonEmptyText,
       "content" -> nonEmptyText
     )(Todo.apply)(Todo.unapply)
   )
@@ -34,7 +33,7 @@ object Todos extends Controller {
         BadRequest
       },
       values => {
-        Ok(Json.toJson(Todo.create(Todo(NotAssigned, values.title, values.content))))
+        Ok(Json.toJson(Todo.create(Todo(NotAssigned, values.content))))
       }
     )
   }

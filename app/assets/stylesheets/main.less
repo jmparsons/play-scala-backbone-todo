@@ -1,5 +1,5 @@
 body {
-  background: #ccc;
+  background: #ddd;
   font-family: helvetica, sans;
   color: #333;
 }
@@ -18,11 +18,7 @@ h1, h2 {
   font-weight: normal;
 }
 
-form label {
-  display: block;
-}
-
-form dt, form dd {
+form label, form dt, form dd {
   margin: 0;
   display: block;
 }
@@ -32,6 +28,7 @@ form input[type=text] {
   font-size: 14px;
   border: 1px solid #ccc;
   padding: 4px;
+  width: 392px;
 }
 
 .info {
@@ -47,4 +44,12 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.tools {
+  display: none;
+}
+
+.todoitem:hover .tools{
+  display: inline-block;
 }

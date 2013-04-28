@@ -3,7 +3,6 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
     defaults:
-      "title":""
       "content":""
 
   class app.Collections.TodoCollection extends Backbone.Collection
@@ -12,7 +11,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
 
   class app.Views.TodoView extends Backbone.View
     el: ".todos"
-    template: _.template('<p><%=id%>. <%=title%> - <%=content%> <a href="#" data-edit-id="<%=id%>">edit</a> <a href="#" data-delete-id="<%=id%>" class="delete">delete</a></p>')
+    template: _.template('<p class="todoitem"><%=id%>. <%=content%> <span class="tools"><a href="#" data-edit-id="<%=id%>">edit</a> <a href="#" data-delete-id="<%=id%>" class="delete">delete</a></p></span>')
     initialize: ->
       _.bindAll @, "render"
       @collection = new app.Collections.TodoCollection
@@ -28,12 +27,12 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
       event.preventDefault()
       that = @
       todo = new app.Models.TodoModel
-        title: $(event.currentTarget).find("#title").val()
         content: $(event.currentTarget).find("#content").val()
       todo.save todo.toJSON(),
         success: (model, response, options) ->
           console.log model, response, options
           that.collection.add model
+          $(".todoform #content").val("")
           console.log "addTodo", "success"
         error: (model, xhr, options) ->
           console.log model, xhr, options

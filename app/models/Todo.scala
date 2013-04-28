@@ -8,7 +8,7 @@ import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class Todo(id: Pk[Long], title: String, content: String)
+case class Todo(id: Pk[Long], content: String)
 
 object Todo {
 
@@ -23,10 +23,9 @@ object Todo {
 
   val simple = {
     get[Pk[Long]]("todo.id") ~
-    get[String]("todo.title") ~
     get[String]("todo.content") map {
-      case id ~ title ~ content => Todo(
-        id, title, content
+      case id ~ content => Todo(
+        id, content
       )
     }
   }
@@ -41,12 +40,11 @@ object Todo {
       SQL(
         """
           insert into todo values (
-            {id}, {title}, {content}
+            {id}, {content}
           )
         """
       ).on(
         'id -> id,
-        'title -> todo.title,
         'content -> todo.content
       ).executeUpdate()
 
@@ -59,12 +57,11 @@ object Todo {
       SQL(
         """
           update todo
-          set title = {title}, content = {content}
+          set content = {content}
           where id = {id}
         """
       ).on(
         'id -> id,
-        'title -> todo.title,
         'content -> todo.content
       ).executeUpdate()
     }
