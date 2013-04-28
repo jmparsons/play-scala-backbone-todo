@@ -10,17 +10,9 @@
     <h2>Add Todo:</h2>
     @helper.form(action = routes.Todos.createTodo, 'class -> "todoform") {
       @helper.inputText(todoForm("content"), '_label -> "")
-      <input type="submit" value="Submit">
+      <input type="submit" value="+">
     }
 
   </div>
-
-  @*
-  <div id="gtodos">
-    @for(todo <- todos) {
-      <p>@todo.id. @todo.content</p>
-    }
-  </div>
-  *@
 
 }

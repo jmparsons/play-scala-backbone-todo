@@ -1,15 +1,15 @@
 body {
-  background: #ddd;
+  background: #bfc8ce;
   font-family: helvetica, sans;
   color: #333;
 }
 
 .todos {
-  background: #eee;
+  background: #f0f2f3;
   width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #aaa;
+  border: 1px solid #9eacb6;
   border-radius: 5px;
 }
 
@@ -18,22 +18,12 @@ h1, h2 {
   font-weight: normal;
 }
 
-form label, form dt, form dd {
-  margin: 0;
-  display: block;
-}
-
-form input[type=text] {
-  border-radius: 3px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  padding: 4px;
-  width: 392px;
+h1 {
+  border-bottom: 2px solid #9eacb6;
 }
 
 .info {
-  font-size: 12px;
-  font-style: italic;
+  display: none;
 }
 
 a {
@@ -52,4 +42,38 @@ a:hover {
 
 .todoitem:hover .tools{
   display: inline-block;
+  float: right;
+}
+
+.todoform {
+  position: relative;
+  height: 30px;
+}
+
+form label, form dl, form dt, form dd {
+  margin: 0;
+  display: block;
+}
+
+form input[type=text] {
+  border-radius: 3px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  width: 358px;
+}
+
+form input[type=submit] {
+  color: #666;
+  font-size: 20px;
+  width: 27px;
+  height: 27px;
+  border: 1px solid #ccc;
+  background: #ddd;
+  padding: 0;
+  margin: 0;
+  border-radius: 3px;
+  position: absolute;
+  top: 2px;
+  right: 0;
 }

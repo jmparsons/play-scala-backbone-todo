@@ -9,9 +9,24 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
     model: app.Models.TodoModel
     url: "/todos"
 
+  class app.Views.TodoListView extends Backbone.View
+    tagName: "ul"
+    initialize: ->
+      console.log "initialize"
+    render: ->
+      console.log "render"
+
+  class app.Views.TodoItemView extends Backbone.View
+    tagName: "li"
+    template: _.template('<%=content%> <span class="tools"><a href="#" data-delete-id="<%=id%>" class="delete">delete</a></span>')
+    initialize: ->
+      console.log "initialize"
+    render: ->
+      console.log "render"
+
   class app.Views.TodoView extends Backbone.View
     el: ".todos"
-    template: _.template('<p class="todoitem"><%=id%>. <%=content%> <span class="tools"><a href="#" data-edit-id="<%=id%>">edit</a> <a href="#" data-delete-id="<%=id%>" class="delete">delete</a></p></span>')
+    template: _.template('<p class="todoitem"><%=content%> <span class="tools"><a href="#" data-delete-id="<%=id%>" class="delete">delete</a></span></p>')
     initialize: ->
       _.bindAll @, "render"
       @collection = new app.Collections.TodoCollection
