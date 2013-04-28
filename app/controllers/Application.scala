@@ -6,6 +6,9 @@ import play.api.libs.json._
 import models._
 import views._
 
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
 object Application extends Controller {
 
   def index = Action {
@@ -13,7 +16,7 @@ object Application extends Controller {
   }
 
   def jsontest = Action {
-    Ok(Json.toJson(Todo.findById(1)))
+    Ok
   }
 
 }

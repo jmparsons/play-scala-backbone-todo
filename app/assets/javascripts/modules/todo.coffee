@@ -12,7 +12,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
 
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"
-    template: _.template('<%=content%> <span class="tools"><a href="#" data-delete-id="<%=id%>" class="delete">delete</a></span>')
+    template: _.template('<%=id%>. <%=content%> <span class="tools"><a href="#" data-delete-id="<%=id%>" class="delete">delete</a></span>')
     initialize: ->
       _.bindAll @
       @model.bind 'change', @render
@@ -44,7 +44,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
         success: (model, response, options) ->
           console.log model, response, options
           that.collection.add model
-          $(".todoform #content").val("")
+          # $(".todoform #content").val("")
           console.log "addTodo", "success"
           itemView = new app.Views.TodoItemView model: model
           that.$el.find(".todolist ul").append itemView.render

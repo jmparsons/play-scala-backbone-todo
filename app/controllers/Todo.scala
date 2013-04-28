@@ -27,20 +27,23 @@ object Todos extends Controller {
     Ok(Json.toJson(Todo.findById(id)))
   }
 
-  def createTodo = Action { implicit request =>
-    todoForm.bindFromRequest.fold(
-      errors => {
-        BadRequest
-      },
-      values => {
-        Ok(Json.toJson(Todo.create(Todo(NotAssigned, values.content))))
-      }
-    )
+  implicit val rds = (
+    (__ \ "content").read[String]
+  )
+
+  def createTodo = Action(parse.json) { request =>
+    request.body.validate[(String)].map{
+      case (content) => Ok(Json.toJson(Todo.create(Todo(NotAssigned, content))))
+    }.recoverTotal{
+      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
+    }
   }
 
   def deleteTodo(id: Long) = Action {
-    var todo = Todo.delete(id)
-    Ok("1")
+    (Todo.delete(id) == 1) match {
+      case true => Ok("1")
+      case _ => BadRequest(Json.obj("status" ->"KO", "message" -> "Record does not exist."))
+    }
   }
 
 }
