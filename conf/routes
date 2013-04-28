@@ -4,12 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /todos                      controllers.Todos.todos
+GET     /jsontest                   controllers.Application.jsontest
+
+# Todos
+GET     /todos                      controllers.Todos.index
 GET     /todos/:id                  controllers.Todos.todoList(id:Long)
 POST    /todos                      controllers.Todos.createTodo
 DELETE  /todos/:id                  controllers.Todos.deleteTodo(id:Long)
-
-GET     /jsontest                   controllers.Application.jsontest
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

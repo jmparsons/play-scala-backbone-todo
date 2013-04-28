@@ -2,28 +2,26 @@
 
 @main("Welcome to Play 2.1") {
 
-  <div id="todos">
+  <div class="todos">
 
-    <div id="todoList">
+    <h1>Todos</h1>
+    <div class="todolist"></div>
 
-    </div>
-
-  @helper.form(action = routes.Todos.createTodo, 'id -> "todoForm") {
-
+    <h2>Add Todo:</h2>
+    @helper.form(action = routes.Todos.createTodo, 'class -> "todoform") {
       @helper.inputText(todoForm("title"))
-
       @helper.inputText(todoForm("content"))
-
       <input type="submit" value="Submit">
-
-  }
+    }
 
   </div>
 
+  @*
   <div id="gtodos">
     @for(todo <- todos) {
       <p>@todo.id. @todo.title - @todo.content</p>
     }
   </div>
+  *@
 
 }

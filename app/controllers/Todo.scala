@@ -20,7 +20,7 @@ object Todos extends Controller {
     )(Todo.apply)(Todo.unapply)
   )
 
-  def todos = Action {
+  def index = Action {
     Ok(Json.toJson(Todo.all()))
   }
 

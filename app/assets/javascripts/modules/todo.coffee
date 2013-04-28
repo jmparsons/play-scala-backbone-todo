@@ -11,7 +11,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
     url: "/todos"
 
   class app.Views.TodoView extends Backbone.View
-    el: "#todos"
+    el: ".todos"
     template: _.template('<p><%=id%>. <%=title%> - <%=content%> <a href="#" data-edit-id="<%=id%>">edit</a> <a href="#" data-delete-id="<%=id%>" class="delete">delete</a></p>')
     initialize: ->
       _.bindAll @, "render"
@@ -20,10 +20,10 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
       @collection.bind "add", @render
       @collection.bind "remove", @render
     render: ->
-      @$el.find("#todoList").empty()
+      @$el.find(".todolist").empty()
       for todo in @collection.models
         do (todo) =>
-          @$el.find("#todoList").append @template(todo.toJSON())
+          @$el.find(".todolist").append @template(todo.toJSON())
     addTodo: (event) ->
       event.preventDefault()
       that = @
@@ -53,6 +53,6 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
           console.log model, xhr, options
       console.log @collection.length
     events:
-      'submit #todoForm' : 'addTodo'
+      'submit .todoform' : 'addTodo'
       'click a.delete' : 'deleteTodo'
 
