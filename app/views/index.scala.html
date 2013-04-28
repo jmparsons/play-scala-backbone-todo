@@ -8,14 +8,14 @@
 
     </div>
 
-  @helper.form(action = routes.Application.createTodo, 'id -> "todoForm") {
-      
+  @helper.form(action = routes.Todos.createTodo, 'id -> "todoForm") {
+
       @helper.inputText(todoForm("title"))
-      
+
       @helper.inputText(todoForm("content"))
 
       <input type="submit" value="Submit">
-      
+
   }
 
   </div>

@@ -1,7 +1,0 @@
-@(form: Form[Todo])(implicit flash: Flash)
-
-@form.globalError.map { error =>
-    <p class="error">
-        @error.message
-    </p>
-}

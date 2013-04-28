@@ -8,11 +8,27 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
+import play.api.libs.json.util._
+import play.api.libs.json.Reads._
+import play.api.libs.json.Writes._
+
 case class Todo(id: Pk[Long], title: String, content: String) {
 
 }
 
 object Todo {
+
+  implicit object PkFormat extends Format[Pk[Long]] {
+    def reads(json: JsValue):JsResult[Pk[Long]] = JsSuccess(Id(json.as[Long]))
+    def writes(id: Pk[Long]):JsNumber = JsNumber(id.get)
+  }
+
+  implicit val todoReads = Json.reads[Todo]
+
+  implicit val todoWrites = Json.writes[Todo]
 
   val simple = {
     get[Pk[Long]]("todo.id") ~

@@ -34,8 +34,10 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
         success: (model, response, options) ->
           console.log model, response, options
           that.collection.add model
+          console.log "addTodo", "success"
         error: (model, xhr, options) ->
           console.log model, xhr, options
+          console.log "addTodo", "error"
     deleteTodo: (event) ->
       event.preventDefault()
       todo = @collection.get $(event.target).data("delete-id")
@@ -44,8 +46,10 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
       console.log @collection.length
       todo.destroy
         success: (model, response, options) ->
+          console.log "destroy", "success"
           console.log model, response, options
         error: (model, xhr, options) ->
+          console.log "destroy", "error"
           console.log model, xhr, options
       console.log @collection.length
     events:
