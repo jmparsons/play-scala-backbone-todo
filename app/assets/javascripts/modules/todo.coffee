@@ -60,6 +60,7 @@ define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todo
           $(".todolist ul", @el).append itemView.render().el
     addTodo: (event) ->
       event.preventDefault()
+      return if $.trim($("#content", event.target).val()) is ""
       that = @
       todo = new app.Models.TodoModel
         content: $("#content", event.target).val()
