@@ -1,4 +1,4 @@
-define ["jquery", "underscore", "backbone"], ($, _, Backbone, Router) ->
+define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
 
   $.fn.editInPlace = (method, options...) ->
     this.each ->

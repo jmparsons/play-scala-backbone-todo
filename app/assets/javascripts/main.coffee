@@ -1,5 +1,5 @@
-require ["domReady", "app", "router"], (domReady, app, Router) ->
-  
+require ["domReady", "app", "router", "dust"], (domReady, app, Router) ->
+
   domReady ->
     app.router = new Router()
     app.router.on "all", (eventName) ->
@@ -8,4 +8,3 @@ require ["domReady", "app", "router"], (domReady, app, Router) ->
       pushState: true
       root: "/"
     # here
-    

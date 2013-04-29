@@ -1,4 +1,4 @@
-define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
+define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todoitem"], (app, $, _, Backbone) ->
 
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
@@ -12,13 +12,17 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
 
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"
-    template: _.template('<%=id%>. <%=content%> <span class="tools"><a href="#" data-delete-id="<%=id%>" class="delete">delete</a></span>')
+    template: _.template("fuck")
     initialize: ->
       _.bindAll @
       @model.bind 'change', @render
       @model.bind 'remove', @unrender
     render: ->
-      @$el.html @template(@model.toJSON())
+      that = @
+      dust.render("templates/todoitem", @model.toJSON(), (err, out) ->
+        that.$el.html "" + ((if err then err else out))
+      )
+      @
     unrender: =>
       $(@el).remove()
     remove: -> @model.destroy()
@@ -34,7 +38,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
       for todo in @collection.models
         do (todo) =>
           itemView = new app.Views.TodoItemView model: todo
-          @$el.find(".todolist ul").append itemView.render
+          @$el.find(".todolist ul").append itemView.render().el
     addTodo: (event) ->
       event.preventDefault()
       that = @
@@ -47,7 +51,7 @@ define ["app", "jquery", "underscore", "backbone"], (app, $, _, Backbone) ->
           # $(".todoform #content").val("")
           console.log "addTodo", "success"
           itemView = new app.Views.TodoItemView model: model
-          that.$el.find(".todolist ul").append itemView.render
+          that.$el.find(".todolist ul").append itemView.render().el
         error: (model, xhr, options) ->
           console.log model, xhr, options
           console.log "addTodo", "error"

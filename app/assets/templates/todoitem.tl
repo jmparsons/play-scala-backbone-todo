@@ -1,0 +1,1 @@
+{id}. {content} <span class="tools"><a href="#" data-delete-id="{id}" class="delete">delete</a></span>
