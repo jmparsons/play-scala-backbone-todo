@@ -31,20 +31,6 @@ object Todos extends Controller {
     (__ \ "content").read[String]
   )
 
-  def updateTodo(id: Long) = Action(parse.json) { request =>
-    request.body.validate[String].map{
-      case (content) => {
-        if (content.trim == "") {
-          BadRequest(Json.obj("status" ->"KO", "message" -> "Field cannot be empty."))
-        } else {
-          Ok(Json.toJson(Todo.update(id, Todo(Id(id), content.trim))))
-        }
-      }
-    }.recoverTotal{
-      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
-    }
-  }
-
   def createTodo = Action(parse.json) { request =>
     request.body.validate[String].map{
       case (content) => {
@@ -52,6 +38,20 @@ object Todos extends Controller {
           BadRequest(Json.obj("status" ->"KO", "message" -> "Field cannot be empty."))
         } else {
           Ok(Json.toJson(Todo.create(Todo(NotAssigned, content.trim))))
+        }
+      }
+    }.recoverTotal{
+      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
+    }
+  }
+
+  def updateTodo(id: Long) = Action(parse.json) { request =>
+    request.body.validate[String].map{
+      case (content) => {
+        if (content.trim == "") {
+          BadRequest(Json.obj("status" ->"KO", "message" -> "Field cannot be empty."))
+        } else {
+          Ok(Json.toJson(Todo.update(id, Todo(Id(id), content.trim))))
         }
       }
     }.recoverTotal{
