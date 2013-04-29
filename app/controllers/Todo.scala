@@ -31,8 +31,16 @@ object Todos extends Controller {
     (__ \ "content").read[String]
   )
 
+  def updateTodo(id: Long) = Action(parse.json) { request =>
+    request.body.validate[String].map{
+      case (content) => Ok(Json.toJson(Todo.update(id, Todo(Id(id), content))))
+    }.recoverTotal{
+      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
+    }
+  }
+
   def createTodo = Action(parse.json) { request =>
-    request.body.validate[(String)].map{
+    request.body.validate[String].map{
       case (content) => Ok(Json.toJson(Todo.create(Todo(NotAssigned, content))))
     }.recoverTotal{
       e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))

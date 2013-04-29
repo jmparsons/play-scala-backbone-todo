@@ -12,20 +12,39 @@ define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todo
 
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"
-    template: _.template("fuck")
     initialize: ->
       _.bindAll @
       @model.bind 'change', @render
       @model.bind 'remove', @unrender
     render: ->
       that = @
-      dust.render("templates/todoitem", @model.toJSON(), (err, out) ->
-        that.$el.html "" + ((if err then err else out))
-      )
+      dust.render "templates/todoitem", @model.toJSON(), (err, out) ->
+        that.$el.html("" + ((if err then err else out))).data "item-id", that.model.toJSON().id
+        $(".edit", that.$el).editInPlace
+          context: that
+          onChange: that.editTodo
       @
     unrender: =>
-      $(@el).remove()
+      @$el.remove()
     remove: -> @model.destroy()
+    editTodo: (content) ->
+      @model.set "content", content
+      @model.save @model.toJSON(),
+        success: (model, response, options) ->
+          console.log model, response, options
+          console.log "editTodo", "success"
+        error: (model, xhr, options) ->
+          console.log model, xhr, options
+          console.log "editTodo", "error"
+      console.log @model
+      # @$el.data "item-id"
+      console.log content
+    # editTodo: (event) ->
+      # console.log @$el.find(".edit")
+      # @$el.editInPlace("edit")
+      # @$el.data "item-id"
+    # events:
+      # 'dblclick .edit' : 'editTodo'
 
   class app.Views.TodoListView extends Backbone.View
     el: ".todos"
@@ -34,30 +53,30 @@ define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todo
       @collection = new app.Collections.TodoCollection
       @collection.fetch success: @render
     render: ->
-      @$el.find(".todolist").html "<ul></ul>"
+      $(".todolist", @el).html "<ul></ul>"
       for todo in @collection.models
         do (todo) =>
           itemView = new app.Views.TodoItemView model: todo
-          @$el.find(".todolist ul").append itemView.render().el
+          $(".todolist ul", @el).append itemView.render().el
     addTodo: (event) ->
       event.preventDefault()
       that = @
       todo = new app.Models.TodoModel
-        content: $(event.currentTarget).find("#content").val()
+        content: $("#content", event.target).val()
       todo.save todo.toJSON(),
         success: (model, response, options) ->
           console.log model, response, options
           that.collection.add model
-          # $(".todoform #content").val("")
+          $("#content", ".todoform").val("")
           console.log "addTodo", "success"
           itemView = new app.Views.TodoItemView model: model
-          that.$el.find(".todolist ul").append itemView.render().el
+          $(".todolist ul", that.$el).append itemView.render().el
         error: (model, xhr, options) ->
           console.log model, xhr, options
           console.log "addTodo", "error"
     deleteTodo: (event) ->
       event.preventDefault()
-      todo = @collection.get $(event.target).data("delete-id")
+      todo = @collection.get $(event.target).closest("li").data("item-id")
       that = @
       console.log todo
       console.log @collection.length

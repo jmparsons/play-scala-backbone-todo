@@ -17,9 +17,23 @@ object Todo {
     def writes(id: Pk[Long]):JsNumber = JsNumber(id.get)
   }
 
-  implicit val todoReads = Json.reads[Todo]
+  // implicit val todoReads: Reads[Todo] = (
+  //   (__ \ "id").read[Pk[Long]] ~
+  //   (__ \ "content").read[String]
+  // )(Todo.apply _)
 
-  implicit val todoWrites = Json.writes[Todo]
+  // val todoWrites: Writes[Todo] = (
+  //   (__ \ "id").write[Pk[Long]] ~
+  //   (__ \ "content").write[String]
+  // )(unlift(Todo.unapply))
+
+  // implicit val todoReads = Json.reads[Todo]
+
+  // implicit val todoWrites = Json.writes[Todo]
+
+  // implicit val todoFormat: Format[Todo] = Format(todoReads, todoWrites)
+
+  implicit val todoFormat = Json.format[Todo]
 
   val simple = {
     get[Pk[Long]]("todo.id") ~

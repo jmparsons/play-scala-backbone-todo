@@ -10,6 +10,7 @@ POST    /jsontest                   controllers.Application.jsontest
 # Todos
 GET     /todos                      controllers.Todos.index
 GET     /todos/:id                  controllers.Todos.todoList(id:Long)
+PUT     /todos/:id                  controllers.Todos.updateTodo(id:Long)
 POST    /todos                      controllers.Todos.createTodo
 DELETE  /todos/:id                  controllers.Todos.deleteTodo(id:Long)
 

@@ -1,5 +1,6 @@
 define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
 
+  # Lifted from the zentasks application
   $.fn.editInPlace = (method, options...) ->
     this.each ->
       methods =
