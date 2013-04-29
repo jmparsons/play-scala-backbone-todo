@@ -61,7 +61,7 @@ object Todos extends Controller {
 
   def deleteTodo(id: Long) = Action {
     (Todo.delete(id) == 1) match {
-      case true => Ok("1")
+      case true => Ok(Json.obj("status" ->"OK", "message" -> ("Record deleted successfully.")))
       case _ => BadRequest(Json.obj("status" ->"KO", "message" -> "Record does not exist."))
     }
   }
