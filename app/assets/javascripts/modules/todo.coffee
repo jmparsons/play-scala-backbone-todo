@@ -1,4 +1,4 @@
-define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todoitem"], (app, $, _, Backbone) ->
+define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], (app, $, _, Backbone) ->
 
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
@@ -8,7 +8,6 @@ define ["app", "jquery", "underscore", "backbone", "dust", "../../templates/todo
   class app.Collections.TodoCollection extends Backbone.Collection
     model: app.Models.TodoModel
     url: "/todos"
-
 
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"

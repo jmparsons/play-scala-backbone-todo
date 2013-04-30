@@ -1,4 +1,4 @@
-require ["domReady", "app", "router", "dust"], (domReady, app, Router) ->
+require ["domReady", "app", "router"], (domReady, app, Router) ->
 
   domReady ->
     app.router = new Router()
