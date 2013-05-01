@@ -15,8 +15,4 @@ object Application extends Controller {
     Ok(html.index("Todos", Todo.all(), Todos.todoForm))
   }
 
-  def jsontest = Action {
-    Ok
-  }
-
 }

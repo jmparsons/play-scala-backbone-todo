@@ -4,8 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /jsontest                   controllers.Application.jsontest
-POST    /jsontest                   controllers.Application.jsontest
 
 # Todos
 GET     /todos                      controllers.Todos.index
