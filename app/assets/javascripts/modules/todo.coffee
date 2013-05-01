@@ -11,8 +11,8 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
     tagName: "li"
     initialize: ->
       _.bindAll @
-      @model.bind 'sync', @render
-      @model.bind 'remove', @unrender
+      @model.bind "sync", @render
+      @model.bind "remove", @unrender
     render: ->
       that = @
       dust.render "templates/todoitem", @model.toJSON(), (err, out) ->
@@ -21,15 +21,13 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
       @
     remove: -> @model.destroy()
     unrender: -> @$el.remove()
-    editTodo: (content) ->
-      console.log @model
-      @model.set("content", content).save @model.toJSON()
+    editTodo: (content) -> @model.set("content", content).save @model.toJSON()
 
   class app.Views.TodoListView extends Backbone.View
     el: ".todos"
     events:
-      'submit .todoform' : 'addTodo'
-      'click a.delete' : 'deleteTodo'
+      "submit .todoform" : "addTodo"
+      "click a.delete" : "deleteTodo"
     initialize: ->
       _.bindAll @
       @collection = new app.Collections.TodoCollection
@@ -49,9 +47,6 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
           that.collection.add model
           $("#content", ".todoform").val("")
           $(".todolist ul", that.$el).append new app.Views.TodoItemView(model: model).render().el
-          console.log "success"
-        error: ->
-          console.log "error"
     deleteTodo: (event) ->
       event.preventDefault()
       todo = @collection.get $(event.target).closest("li").data("item-id")
