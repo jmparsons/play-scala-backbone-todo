@@ -1,4 +1,4 @@
-# Play Framework Todo list on Backbone
+# Play 2.1 Scala Todo list on Backbone
 An example Todo list application built on [Play Framework](http://www.playframework.com), [Backbone](http://backbonejs.org), [RequireJS](http://requirejs.org), [CoffeeScript](http://coffeescript.org), [Less](http://lesscss.org) and [Dust](http://linkedin.github.io/dustjs/) using the H2 in-memory database.
 
 ## Features
