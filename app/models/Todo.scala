@@ -7,7 +7,6 @@ import play.api.db._
 import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
 
 case class Todo(id: Pk[Long], content: String)
 
