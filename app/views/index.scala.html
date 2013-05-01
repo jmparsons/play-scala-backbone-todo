@@ -1,15 +1,15 @@
 @(message: String, todos: List[Todo], todoForm: Form[Todo])
 
-@main("Welcome to Play 2.1") {
+@main("Todos - Play Framework") {
+
+  <h1>Todos</h1>
 
   <div class="todos">
 
-    <h1>Todos</h1>
     <div class="todolist"></div>
 
-    <h2>Add Todo:</h2>
     @helper.form(action = routes.Todos.createTodo, 'class -> "todoform") {
-      @helper.inputText(todoForm("content"), '_label -> "")
+      @helper.inputText(todoForm("content"), '_label -> "", 'placeholder -> "What do you need to do?")
       <input type="submit" value="+">
     }
 

@@ -1,16 +1,46 @@
 body {
-  background: #bfc8ce;
+  background: #eee;
   font-family: helvetica, sans;
-  color: #333;
+  color: #555;
 }
 
+@todo-width: 500px;
+
 .todos {
-  background: #f0f2f3;
-  width: 400px;
+  background: #fff;
+  width: @todo-width;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #9eacb6;
-  border-radius: 5px;
+  padding: 5px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 5px 30px #ccc;
+}
+
+.info {
+  display: none;
+}
+
+.todoform {
+  position: relative;
+  height: 30px;
+  top: 2px;
+}
+
+a.delete {
+  color: #f00;
+  display: block;
+  line-height: 27px;
+  font-family: arial;
+  font-weight: bold;
+  font-size: 18px;
+  float:right;
+  padding: 0 8px;
+  display: none;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
 }
 
 h1, h2 {
@@ -19,61 +49,47 @@ h1, h2 {
 }
 
 h1 {
-  border-bottom: 2px solid #9eacb6;
-}
-
-.info {
-  display: none;
+  text-align: center;
+  padding: 10px 0 20px;
+  color: #666;
 }
 
 a {
   font-size: 13px;
   color: #069;
   text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.tools {
-  display: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 ul {
   margin: 0;
-  padding: 10px 0;
-  list-style: none;
-}
-
-li {
-  display: block;
-  margin: 0;
-  padding: 4px 0;
-  font-size: 16px;
-  line-height: 28px;
-}
-
-li input[type=text] {
-  font-family: helvetica, sans;
-  font-size: 16px;
-  margin: 0;
   padding: 0;
-  width: 100%;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  padding: 4px;
-  width: 340px;
-}
-
-li:hover .tools{
-  display: inline-block;
-  float: right;
-}
-
-.todoform {
-  position: relative;
-  height: 30px;
+  list-style: none;
+  li {
+    display: block;
+    margin: 0;
+    padding: 4px 0;
+    font-size: 16px;
+    line-height: 28px;
+    background: #fff;
+    border-bottom: 1px dotted #ccc;
+    &:last-child {
+      border-bottom: 0;
+    }
+    & input[type=text] {
+      font-family: helvetica, sans;
+      font-size: 16px;
+      margin: 0;
+      padding: 4px 0;
+      border: 0;
+      width: @todo-width - 50;
+    }
+    &:hover .delete{
+      display: inline-block;
+    }
+  }
 }
 
 form label, form dl, form dt, form dd {
@@ -81,25 +97,30 @@ form label, form dl, form dt, form dd {
   display: block;
 }
 
-form input[type=text] {
-  border-radius: 3px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  padding: 4px;
-  width: 358px;
+form input {
+  &[type=text] {
+    border-radius: 3px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    width: @todo-width - 42;
+  }
+  &[type=submit] {
+    color: #666;
+    font-size: 20px;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #ccc;
+    background: #ddd;
+    padding: 0;
+    margin: 0;
+    border-radius: 3px;
+    position: absolute;
+    top: 2px;
+    right: 0;
+  }
 }
 
-form input[type=submit] {
-  color: #666;
-  font-size: 20px;
-  width: 27px;
-  height: 27px;
-  border: 1px solid #ccc;
-  background: #ddd;
-  padding: 0;
-  margin: 0;
-  border-radius: 3px;
-  position: absolute;
-  top: 2px;
-  right: 0;
+input:focus {
+  outline: none;
 }

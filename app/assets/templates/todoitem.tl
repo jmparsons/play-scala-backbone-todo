@@ -1,1 +1,1 @@
-<span class="edit">{content}</span> <span class="tools"><a href="#" class="delete">delete</a></span>
+<span class="edit">{content}</span> <a href="#" class="delete">X</a>
