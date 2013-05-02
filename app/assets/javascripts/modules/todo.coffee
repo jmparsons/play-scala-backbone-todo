@@ -7,7 +7,7 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
     model: app.Models.TodoModel
     url: "/todos"
     comparator: (todo) ->
-        todo.get("id")
+      todo.get("id")
 
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"
