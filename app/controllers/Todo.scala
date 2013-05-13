@@ -27,25 +27,17 @@ object Todos extends Controller {
     Ok(Json.toJson(Todo.findById(id)))
   }
 
-  implicit val rds = (
-    (__ \ "content").read[String]
-  )
-
   def createTodo = Action(parse.json) { request =>
-    request.body.validate[String].filterNot(_.isEmpty).map{
-      case (content) => {
-        Ok(Json.toJson(Todo.create(Todo(NotAssigned, content.trim))))
-      }
+    request.body.validate[Todo].map {
+      case (todo) => Ok(Json.toJson(Todo.create(Todo(NotAssigned, todo.content.trim))))
     }.recoverTotal{
       e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
     }
   }
 
   def updateTodo(id: Long) = Action(parse.json) { request =>
-    request.body.validate[String].filterNot(_.isEmpty).map{
-      case (content) => {
-        Ok(Json.toJson(Todo.update(id, Todo(Id(id), content.trim))))
-      }
+    request.body.validate[Todo].map {
+      case (todo) => Ok(Json.toJson(Todo.update(id, Todo(Id(todo.id.get), todo.content.trim))))
     }.recoverTotal{
       e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
     }

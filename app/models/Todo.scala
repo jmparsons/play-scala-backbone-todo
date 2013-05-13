@@ -7,6 +7,8 @@ import play.api.db._
 import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api._
+import play.api.libs.json.Reads._
 
 case class Todo(id: Pk[Long], content: String)
 
@@ -17,7 +19,12 @@ object Todo {
     def writes(id: Pk[Long]):JsNumber = JsNumber(id.get)
   }
 
-  implicit val todoFormat = Json.format[Todo]
+  implicit val todoReads: Reads[Todo] = (
+    (__ \ "id").readNullable[Pk[Long]].map(_.getOrElse(NotAssigned)) ~
+    (__ \ "content").read(minLength[String](1))
+  )(Todo.apply _)
+
+  implicit val todoWrites = Json.writes[Todo]
 
   val simple = {
     get[Pk[Long]]("todo.id") ~
