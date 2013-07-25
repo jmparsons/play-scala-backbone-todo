@@ -1,108 +1,51 @@
 package models
 
-import java.util.Date
-import anorm._
-import anorm.SqlParser._
+import play.api._
 import play.api.db._
 import play.api.Play.current
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
-import play.api._
-import play.api.libs.json.Reads._
+import play.api.db.slick.DB
+import play.api.db.slick.Config.driver.simple._
 
-case class Todo(id: Pk[Long], content: String)
+case class Todo(id: Option[Long] = None, content: String)
 
 object Todo {
+  implicit val todoFmt = Json.format[Todo]
+}
 
-  implicit object PkFormat extends Format[Pk[Long]] {
-    def reads(json: JsValue):JsResult[Pk[Long]] = JsSuccess(Id(json.as[Long]))
-    def writes(id: Pk[Long]):JsNumber = JsNumber(id.get)
+object Todos extends Table[Todo]("TODO") {
+
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  def content = column[String]("content")
+
+  def * = id.? ~ content <>(Todo.apply _, Todo.unapply _)
+  def autoInc = * returning id
+
+  val byId = createFinderBy(_.id)
+
+  def create(todo: Todo) = DB.withSession { implicit session =>
+    Todos.autoInc.insert(todo)
   }
 
-  implicit val todoReads: Reads[Todo] = (
-    (__ \ "id").readNullable[Pk[Long]].map(_.getOrElse(NotAssigned)) ~
-    (__ \ "content").read(minLength[String](1))
-  )(Todo.apply _)
-
-  implicit val todoWrites = Json.writes[Todo]
-
-  val simple = {
-    get[Pk[Long]]("todo.id") ~
-    get[String]("todo.content") map {
-      case id ~ content => Todo(
-        id, content
-      )
-    }
+  def update(id: Long, todo: Todo) = DB.withSession { implicit session =>
+    val todoToUpdate: Todo = todo.copy(Some(id))
+    Todos.where(_.id === id).update(todoToUpdate)
   }
 
-  def create(todo: Todo): Todo = {
-    DB.withConnection { implicit c =>
-
-      val id: Long = todo.id.getOrElse {
-        SQL("select next value for todo_id_seq").as(scalar[Long].single)
-      }
-
-      SQL(
-        """
-          insert into todo values (
-            {id}, {content}
-          )
-        """
-      ).on(
-        'id -> id,
-        'content -> todo.content
-      ).executeUpdate()
-
-      todo.copy(id = Id(id))
-    }
+  def findById(id: Long): Option[Todo] = DB.withSession { implicit session =>
+    Todos.byId(id).firstOption
   }
 
-  def update(id: Long, todo: Todo) = {
-    DB.withConnection { implicit c =>
-      SQL(
-        """
-          update todo
-          set content = {content}
-          where id = {id}
-        """
-      ).on(
-        'id -> id,
-        'content -> todo.content
-      ).executeUpdate()
-    }
+  def all(): List[Todo] = DB.withSession { implicit session =>
+    (for(m <- Todos) yield m).sortBy(_.id).list
   }
 
-  def delete(id: Long) = {
-    DB.withConnection { implicit c =>
-      SQL(
-        """
-          delete from todo
-          where id = {id}
-        """
-      ).on(
-        'id -> id
-      ).executeUpdate()
-    }
+  def count: Int = DB.withSession { implicit session =>
+    Query(Todos.length).first
   }
 
-  def findById(id: Long): Option[Todo] = {
-    DB.withConnection { implicit c =>
-      SQL("select * from todo where id = {id}").on(
-        'id -> id
-      ).as(Todo.simple.singleOpt)
-    }
-  }
-
-  def count() = {
-    DB.withConnection { implicit connection =>
-      SQL("select count(*) from todo").as(scalar[Long].single)
-    }
-  }
-
-  def all(): List[Todo] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from todo").as(Todo.simple *)
-    }
+  def delete(id: Long) = DB.withSession { implicit session =>
+    Todos.where(_.id === id).delete
   }
 
 }

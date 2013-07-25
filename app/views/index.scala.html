@@ -8,13 +8,13 @@
 
     <div class="todolist"></div>
 
-    @helper.form(action = routes.Todos.createTodo, 'class -> "todoform") {
+    @helper.form(action = routes.TodoController.createTodo, 'class -> "todoform") {
       @helper.inputText(todoForm("content"), '_label -> "", 'placeholder -> "What do you need to do?")
       <input type="submit" value="+">
     }
 
   </div>
 
-  <p class="credits">Written by <a href="http://github.com/jmparsons">JMParsons</a></p>
+  <p class="credits">Written by <a href="http://github.com/jmparsons" target="_blank">JMParsons</a></p>
 
 }

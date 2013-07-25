@@ -1,10 +1,22 @@
+@todo-width: 440px;
+
 body {
   background: #eee;
   font-family: helvetica, sans;
   color: #555;
 }
 
-@todo-width: 440px;
+h1 {
+  text-align: center;
+  padding: 10px 0 20px;
+  color: #666;
+  text-shadow: 0 1px 2px #888;
+}
+
+h1, h2 {
+  margin: 0;
+  font-weight: normal;
+}
 
 .todos {
   background: #fff;
@@ -26,6 +38,15 @@ body {
   top: 2px;
 }
 
+a {
+  font-size: 13px;
+  color: #069;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 a.delete {
   color: #f00;
   display: block;
@@ -40,27 +61,6 @@ a.delete {
   &:hover {
     opacity: 1;
     text-decoration: none;
-  }
-}
-
-h1, h2 {
-  margin: 0;
-  font-weight: normal;
-}
-
-h1 {
-  text-align: center;
-  padding: 10px 0 20px;
-  color: #666;
-  text-shadow: 0 1px 2px #888;
-}
-
-a {
-  font-size: 13px;
-  color: #069;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
   }
 }
 

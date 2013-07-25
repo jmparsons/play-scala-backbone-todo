@@ -9,7 +9,8 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     jdbc,
-    anorm
+    "com.typesafe.play" %% "play-slick" % "0.3.3",
+    "org.seleniumhq.selenium" % "selenium-firefox-driver" % "2.33.0"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
