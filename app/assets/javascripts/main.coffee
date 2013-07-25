@@ -1,3 +1,10 @@
+require.config
+  shim:
+    backbone:
+      deps: ["underscore", "jquery"]
+      exports: "Backbone"
+  optimize: "uglify2"
+  
 require ["domReady", "app", "router"], (domReady, app, Router) ->
 
   domReady ->
