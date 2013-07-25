@@ -3,14 +3,13 @@ require.config
     backbone:
       deps: ["underscore", "jquery"]
       exports: "Backbone"
-  optimize: "uglify2"
-  
-require ["domReady", "app", "router"], (domReady, app, Router) ->
+    app:
+      deps: ["backbone", "dust"]
+      exports: "app"
 
-  domReady ->
+require ["app", "router"], (app, Router) ->
+  $ ->
     app.router = new Router()
-    app.router.on "all", (eventName) ->
-      app.loaded = true
     Backbone.history.start
       pushState: true
       root: "/"

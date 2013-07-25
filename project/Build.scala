@@ -4,11 +4,10 @@ import play.Project._
 
 object ApplicationBuild extends Build {
 
-  val appName         = "bonetest"
+  val appName         = "play-scala-backbone-todo"
   val appVersion      = "1.0-SNAPSHOT"
 
   val appDependencies = Seq(
-    // Add your project dependencies here,
     jdbc,
     anorm
   )

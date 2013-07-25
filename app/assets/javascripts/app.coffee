@@ -1,4 +1,4 @@
-define ["jquery", "underscore", "backbone", "dust"], ($, _, Backbone) ->
+define ->
 
   # From the zentasks application
   $.fn.editInPlace = (method, options...) ->

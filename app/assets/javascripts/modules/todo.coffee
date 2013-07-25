@@ -1,4 +1,4 @@
-define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], (app, $, _, Backbone) ->
+define ["app", "../../templates/todoitem"], (app) ->
 
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
@@ -39,6 +39,7 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
       for model in @collection.models
         do (model) =>
           $(".todolist ul", @el).append new app.Views.TodoItemView(model: model).render().el
+      @
     addTodo: (event) ->
       event.preventDefault()
       return if $.trim($("#content", event.target).val()) is ""

@@ -3,7 +3,7 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 
 ## Features
 1. Setup Play routes and methods to interact with Backbone crud.
-2. Shows use of Play 2.1.1 JSON Objects / Reads / Writes / Formatters.
+2. Shows use of Play JSON Objects / Reads / Writes / Formatters.
 3. Renders based on successful Backbone synced calls to the database.
 4. Grouping of Models, Collections, Views etc. in the app object.
 5. RequireJS Play structure and setup with shim.
@@ -11,8 +11,14 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 7. Has front and backend validation returning JsObjects.
 
 ## Additional
-1. Uses [domReady](https://github.com/requirejs/domReady) to check for the dom to be loaded.
-2. In-line editing from Play Framework Zentasks sample application.
+1. In-line editing from Play Framework Zentasks sample application.
+
+## Changelog
+
+July 24, 2013
+
+- Removed shim from shim file, now using it in main as require configuration.
+- Removed domReady just using jQuery ready now.
 
 ## License
 MIT: <http://jmparsons.mit-license.org> - [@jmparsons](http://twitter.com/jmparsons)
