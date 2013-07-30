@@ -16,7 +16,7 @@ object Todo {
 object Todos extends Table[Todo]("TODO") {
 
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-  def content = column[String]("content")
+  def content = column[String]("content", O.DBType("TEXT"))
 
   def * = id.? ~ content <>(Todo.apply _, Todo.unapply _)
   def autoInc = * returning id

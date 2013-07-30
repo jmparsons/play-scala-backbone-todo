@@ -13,6 +13,10 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 
 ## Changelog
 
+July 29, 2013
+
+- Added DBType text for content column.
+
 2.0 July 25, 2013
 
 - Now using [Slick](http://slick.typesafe.com/) via [play-slick](https://github.com/freekh/play-slick) instead of anorm.
