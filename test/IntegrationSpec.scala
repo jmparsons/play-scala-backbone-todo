@@ -8,6 +8,10 @@ import org.openqa.selenium._
 import org.openqa.selenium.firefox._
 import java.util.concurrent.TimeUnit._
 import org.fluentlenium.core.filter.FilterConstructor._
+import scala.slick.driver.H2Driver
+import scala.slick.driver.H2Driver.simple._
+import play.api.db.slick._
+import play.api.Play.current
 import models._
 
 object IntegrationSpec extends Specification{
@@ -24,7 +28,9 @@ object IntegrationSpec extends Specification{
       running(testServer, classOf[FirefoxDriver]) { browser =>
         browser.goTo("http://localhost:3333/")
         browser.$("h1").first.getText must equalTo("Todos")
-        Todos.findById(1).get.content must equalTo("Hello todos.")
+        DB.withSession { implicit session: Session =>
+          Todos.findById(1).get.content must equalTo("Hello todos.")
+        }
         browser.await().atMost(5, SECONDS).until("span.edit").isPresent
         browser.$("span.edit").first.getText must equalTo("Hello todos.")
         browser.executeScript("$('a.delete').click()")

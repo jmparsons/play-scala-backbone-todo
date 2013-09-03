@@ -13,6 +13,15 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 
 ## Changelog
 
+September 3, 2013
+
+- Updated to Play 2.1.3
+- Updated [play-slick](https://github.com/freekh/play-slick) to 0.4.0 - latest for Play 2.1
+- Added implicit sessions to models removing the withSessions
+- Added an example of using DBAction then grabbing the request as json with validation
+- Added an example of using a json body parser to retrieve the request then using DB withSession
+- Updated tests to use session
+
 July 29, 2013
 
 - Added DBType text for content column.

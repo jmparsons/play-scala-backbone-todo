@@ -9,7 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     jdbc,
-    "com.typesafe.play" %% "play-slick" % "0.3.3",
+    "com.typesafe.play" %% "play-slick" % "0.4.0",
     "org.seleniumhq.selenium" % "selenium-firefox-driver" % "2.33.0"
   )
 

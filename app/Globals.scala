@@ -1,5 +1,6 @@
 import play.api._
-import play.api.mvc._
+import play.api.db.slick._
+import play.api.Play.current
 import models._
 
 object Global extends GlobalSettings {
@@ -10,10 +11,13 @@ object Global extends GlobalSettings {
 
   object InitialData {
     def insert() = {
-      if (Todos.count == 0) {
-        Seq(
-          Todo(None, "Hello todos.")
-        ).foreach(Todos.create)
+      DB.withSession { implicit s:Session =>
+        println(s)
+        if (Todos.count == 0) {
+          Seq(
+            Todo(None, "Hello todos.")
+          ).foreach(Todos.create)
+        }
       }
     }
   }
