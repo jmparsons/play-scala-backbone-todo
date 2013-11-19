@@ -1,11 +1,13 @@
 package models
 
 import play.api._
-import play.api.db._
 import play.api.Play.current
 import play.api.libs.json._
-import play.api.db.slick.DB
 import play.api.db.slick.Config.driver.simple._
+
+private[models] trait DAO extends TodosComponent {
+  val Todos = new Todos
+}
 
 case class Todo(id: Option[Long] = None, content: String)
 
@@ -13,14 +15,19 @@ object Todo {
   implicit val todoFmt = Json.format[Todo]
 }
 
-object Todos extends Table[Todo]("TODO") {
+trait TodosComponent {
+  val Todos: Todos
 
-  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-  def content = column[String]("content", O.DBType("TEXT"))
-  def * = id.? ~ content <>(Todo.apply _, Todo.unapply _)
-  def autoInc = * returning id
+  class Todos extends Table[Todo]("TODO") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def content = column[String]("content", O.DBType("TEXT"))
+    def * = id.? ~ content <>(Todo.apply _, Todo.unapply _)
+    def autoInc = * returning id
+    val byId = createFinderBy(_.id)
+  }
+}
 
-  val byId = createFinderBy(_.id)
+object Todos extends DAO {
 
   def create(todo: Todo)(implicit s:Session) = {
     Todos.autoInc.insert(todo)

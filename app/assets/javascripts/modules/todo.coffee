@@ -12,7 +12,7 @@ define ["app", "../../templates/todoitem"], (app) ->
   class app.Views.TodoItemView extends Backbone.View
     tagName: "li"
     initialize: ->
-      _.bindAll @
+      _.bindAll.apply _, [@].concat(_.functions(@))
       @model.bind "sync", @render
       @model.bind "remove", @unrender
     render: ->
@@ -31,7 +31,7 @@ define ["app", "../../templates/todoitem"], (app) ->
       "submit .todoform" : "addTodo"
       "click a.delete" : "deleteTodo"
     initialize: ->
-      _.bindAll @
+      _.bindAll.apply _, [@].concat(_.functions(@))
       @collection = new app.Collections.TodoCollection
       @collection.fetch success: @render
     render: ->

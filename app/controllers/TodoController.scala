@@ -27,25 +27,17 @@ object TodoController extends Controller {
     Ok(Json.toJson(Todos.findById(id)))
   }
 
-  //the reqest body is now in the RequestWithDbSession (rs)
-  //the body value is not json in this case, it is AnyContentAsJson
-  //to validate against it we need the actual json
-  def createTodo = DBAction { implicit rs =>
-    rs.request.body.asJson.get.validate[Todo].map {
+  def createTodo = DBAction(parse.json) { implicit rs =>
+    rs.body.validate[Todo].map {
       case (todo) => Ok(Json.toJson(Todos.findById(Todos.create(Todo(None, todo.content.trim)))))
     }.recoverTotal {
       e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
     }
   }
 
-  //same method essentially as createTodo except we keep the json body parser
-  //and instead use a DB.withSession call to slick with an implicit session
-  //bound to the slick type reference for the Session
-  def updateTodo(id: Long) = Action(parse.json) { request =>
-    request.body.validate[Todo].map {
-      case (todo) => DB.withSession { implicit s:play.api.db.slick.Session =>
-        Ok(Json.toJson(Todos.update(id, Todo(todo.id, todo.content.trim))))
-      }
+  def updateTodo(id: Long) = DBAction(parse.json) { implicit rs =>
+    rs.body.validate[Todo].map {
+      case (todo) => Ok(Json.toJson(Todos.update(id, Todo(todo.id, todo.content.trim))))
     }.recoverTotal {
       e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
     }

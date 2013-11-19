@@ -13,6 +13,18 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 
 ## Changelog
 
+November 18, 2013 (3.0)
+
+- Updated to Play 2.2.1
+- Now using latest Dust [play-dustjs](https://github.com/jmparsons/play-dustjs)
+- Updated [play-slick](https://github.com/freekh/play-slick) to 0.5.0.8 - latest for Play 2.2.x
+- Added build.sbt and removed Build.scala file
+- Updated TodoController to use DBAction with new parser built-in
+- Updated Todo Model to use new DAO separation component
+- Updated tests to use PlaySpecification
+- Updated todo js module to use new bindAll from Underscore with concat functions
+- Updated javascript file versions
+
 September 3, 2013
 
 - Updated to Play 2.1.3
@@ -26,7 +38,7 @@ July 29, 2013
 
 - Added DBType text for content column.
 
-2.0 July 25, 2013
+July 25, 2013 (2.0)
 
 - Now using [Slick](http://slick.typesafe.com/) via [play-slick](https://github.com/freekh/play-slick) instead of anorm.
 - Using Slick via DB with session instead of DBAction for now.

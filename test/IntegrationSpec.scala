@@ -14,7 +14,7 @@ import play.api.db.slick._
 import play.api.Play.current
 import models._
 
-object IntegrationSpec extends Specification{
+object IntegrationSpec extends PlaySpecification {
 
   def testServer = TestServer(3333, FakeApplication(additionalConfiguration = inMemoryDatabase()))
 
