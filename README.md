@@ -1,5 +1,5 @@
-# Play 2.1 Scala Todo list on Backbone and Slick
-A Todo list application built on [Play Framework](http://www.playframework.com), [Slick](http://slick.typesafe.com/), [Backbone](http://backbonejs.org), [RequireJS](http://requirejs.org), [CoffeeScript](http://coffeescript.org), [Less](http://lesscss.org) and [Dust](http://linkedin.github.io/dustjs/) using the H2 in-memory database.
+# Play 2.2.x Todo list using Backbone and Slick
+A Todo list application built on [Play Framework](http://www.playframework.com) (Scala), [Slick](http://slick.typesafe.com/), [Backbone](http://backbonejs.org), [RequireJS](http://requirejs.org), [CoffeeScript](http://coffeescript.org), [Less](http://lesscss.org) and [Dust](http://linkedin.github.io/dustjs/) using the H2 in-memory database.
 
 ## Features
 1. Setup Play routes and methods to interact with Backbone CRUD.
@@ -16,7 +16,7 @@ A Todo list application built on [Play Framework](http://www.playframework.com),
 November 18, 2013 (3.0)
 
 - Updated to Play 2.2.1
-- Now using latest Dust [play-dustjs](https://github.com/jmparsons/play-dustjs)
+- Now using latest Dust templating [play-dustjs](https://github.com/jmparsons/play-dustjs)
 - Updated [play-slick](https://github.com/freekh/play-slick) to 0.5.0.8 - latest for Play 2.2.x
 - Added build.sbt and removed Build.scala file
 - Updated TodoController to use DBAction with new parser built-in
