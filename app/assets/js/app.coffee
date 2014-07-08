@@ -1,4 +1,4 @@
-define ->
+define ["jquery"], ($) ->
 
   # From the zentasks application
   $.fn.editInPlace = (method, options...) ->

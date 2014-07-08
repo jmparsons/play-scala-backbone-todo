@@ -3,11 +3,8 @@ package models
 import play.api._
 import play.api.Play.current
 import play.api.libs.json._
+import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._
-
-private[models] trait DAO extends TodosComponent {
-  val Todos = new Todos
-}
 
 case class Todo(id: Option[Long] = None, content: String)
 
@@ -15,43 +12,39 @@ object Todo {
   implicit val todoFmt = Json.format[Todo]
 }
 
-trait TodosComponent {
-  val Todos: Todos
-
-  class Todos extends Table[Todo]("TODO") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def content = column[String]("content", O.DBType("TEXT"))
-    def * = id.? ~ content <>(Todo.apply _, Todo.unapply _)
-    def autoInc = * returning id
-    val byId = createFinderBy(_.id)
-  }
+class Todos(tag: Tag) extends Table[Todo](tag, "TODO") {
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  def content = column[String]("content", O.DBType("TEXT"))
+  def * = (id.?, content) <>((Todo.apply _).tupled, Todo.unapply _)
 }
 
-object Todos extends DAO {
+object Todos {
+
+  val todos = TableQuery[Todos]
 
   def create(todo: Todo)(implicit s:Session) = {
-    Todos.autoInc.insert(todo)
+    todos returning todos.map(_.id) += todo
   }
 
   def update(id: Long, todo: Todo)(implicit s:Session) = {
     val todoToUpdate: Todo = todo.copy(Some(id))
-    Todos.where(_.id === id).update(todoToUpdate)
+    todos.where(_.id === id).update(todoToUpdate)
   }
 
   def findById(id: Long)(implicit s:Session): Option[Todo] = {
-    Todos.byId(id).firstOption
+    todos.filter(_.id === id).firstOption
   }
 
   def all()(implicit s:Session): List[Todo] = {
-    Query(Todos).sortBy(_.id).list
+    todos.sortBy(_.id).list
   }
 
   def count(implicit s:Session): Int = {
-    Query(Todos.length).first
+    Query(todos.length).first
   }
 
   def delete(id: Long)(implicit s:Session) = {
-    Todos.where(_.id === id).delete
+    todos.where(_.id === id).delete
   }
 
 }

@@ -1,4 +1,4 @@
-define ["app", "../../templates/todoitem"], (app) ->
+define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], (app, $, _, Backbone) ->
 
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
@@ -23,7 +23,7 @@ define ["app", "../../templates/todoitem"], (app) ->
       @
     remove: -> @model.destroy()
     unrender: -> @$el.remove()
-    editTodo: (content) -> @model.set("content", content).save @model.toJSON()
+    editTodo: (content) -> if content is "" then @model.toJSON() else @model.set("content", content).save @model.toJSON()
 
   class app.Views.TodoListView extends Backbone.View
     el: ".todos"
@@ -47,6 +47,7 @@ define ["app", "../../templates/todoitem"], (app) ->
       todo = new app.Models.TodoModel content: $("#content", event.target).val()
       todo.save todo.toJSON(),
         success: (model, response, options) ->
+          console.log model, response, options
           that.collection.add model
           $("#content", ".todoform").val("")
           $(".todolist ul", that.$el).append new app.Views.TodoItemView(model: model).render().el
