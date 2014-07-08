@@ -1,5 +1,4 @@
 # Play 2.3.x Todo list example app
-## Using Backbone and Slick
 A Todo list application built on [Play Framework](http://www.playframework.com) (Scala), [Slick](http://slick.typesafe.com/), [Webjars](https://github.com/webjars), [Backbone](http://backbonejs.org), [RequireJS](http://requirejs.org), [CoffeeScript](http://coffeescript.org) and [Dustjs](http://linkedin.github.io/dustjs/) using the H2 in-memory database.
 
 ## Features
