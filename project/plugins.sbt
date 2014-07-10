@@ -22,4 +22,4 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.0.0")
 
-addSbtPlugin("com.jmparsons.sbt" % "sbt-dustjs-linkedin" % "1.0.1")
+addSbtPlugin("com.jmparsons.sbt" % "sbt-dustjs-linkedin" % "1.0.2")
