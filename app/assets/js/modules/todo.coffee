@@ -1,4 +1,4 @@
-define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], (app, $, _, Backbone) ->
+define ["app", "jquery", "underscore", "backbone", "todoitem"], (app, $, _, Backbone) ->
 
   class app.Models.TodoModel extends Backbone.Model
     urlRoot: "/todos"
@@ -17,7 +17,7 @@ define ["app", "jquery", "underscore", "backbone", "../../templates/todoitem"], 
       @model.bind "remove", @unrender
     render: ->
       that = @
-      dust.render "templates/todoitem", @model.toJSON(), (err, out) ->
+      dust.render "todoitem", @model.toJSON(), (err, out) ->
         that.$el.html(if err then err else out).data "item-id", that.model.toJSON().id
         $(".edit", that.$el).editInPlace context: that, onChange: that.editTodo
       @

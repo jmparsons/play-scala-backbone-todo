@@ -4,6 +4,7 @@ require.config
     backbone: "../lib/backbonejs/backbone"
     underscore: "../lib/underscorejs/underscore"
     dust: "../lib/dustjs-linkedin/dust-core"
+    todoitem: "../templates/todoitem"
   shim:
     backbone:
       deps: ["underscore", "jquery"]
@@ -12,6 +13,8 @@ require.config
       exports: "_"
     jquery:
       exports: "$"
+    todoitem:
+      deps: ["dust"]
 
 require ["app", "router", "jquery", "backbone", "underscore", "dust"], (app, Router, $, Backbone, _) ->
 
