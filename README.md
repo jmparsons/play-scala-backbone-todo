@@ -13,6 +13,12 @@ A Todo list application built on [Play Framework](http://www.playframework.com) 
 
 ## Changelog
 
+July 23, 2014 (5.0)
+
+- Updated to Play 2.3.2
+- Added todoitem to require config
+- Updated [play-slick](https://github.com/playframework/play-slick) to 0.8.0-RC2
+
 July 8, 2014 (4.0)
 
 - Updated to Play 2.3.1

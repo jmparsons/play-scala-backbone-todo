@@ -28,7 +28,7 @@ object Todos {
 
   def update(id: Long, todo: Todo)(implicit s:Session) = {
     val todoToUpdate: Todo = todo.copy(Some(id))
-    todos.where(_.id === id).update(todoToUpdate)
+    todos.filter(_.id === id).update(todoToUpdate)
   }
 
   def findById(id: Long)(implicit s:Session): Option[Todo] = {
@@ -44,7 +44,7 @@ object Todos {
   }
 
   def delete(id: Long)(implicit s:Session) = {
-    todos.where(_.id === id).delete
+    todos.filter(_.id === id).delete
   }
 
 }

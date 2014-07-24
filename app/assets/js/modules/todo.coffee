@@ -17,7 +17,7 @@ define ["app", "jquery", "underscore", "backbone", "todoitem"], (app, $, _, Back
       @model.bind "remove", @unrender
     render: ->
       that = @
-      dust.render "todoitem", @model.toJSON(), (err, out) ->
+      dust.render "templates/todoitem", @model.toJSON(), (err, out) ->
         that.$el.html(if err then err else out).data "item-id", that.model.toJSON().id
         $(".edit", that.$el).editInPlace context: that, onChange: that.editTodo
       @
@@ -47,7 +47,6 @@ define ["app", "jquery", "underscore", "backbone", "todoitem"], (app, $, _, Back
       todo = new app.Models.TodoModel content: $("#content", event.target).val()
       todo.save todo.toJSON(),
         success: (model, response, options) ->
-          console.log model, response, options
           that.collection.add model
           $("#content", ".todoform").val("")
           $(".todolist ul", that.$el).append new app.Views.TodoItemView(model: model).render().el
