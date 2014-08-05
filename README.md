@@ -13,6 +13,11 @@ A Todo list application built on [Play Framework](http://www.playframework.com) 
 
 ## Changelog
 
+August 5, 2014 (6.0)
+
+- Updated [play-slick](https://github.com/playframework/play-slick) to 0.8.0 - non RC
+- Updated [sbt-dustjs-linkedin](https://github.com/jmparsons/sbt-dustjs-linkedin) to 1.0.3 with Windows compatibility
+
 July 23, 2014 (5.0)
 
 - Updated to Play 2.3.2
