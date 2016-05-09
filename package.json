@@ -1,0 +1,9 @@
+{
+  "name": "play-scala-backbone-todo",
+  "version": "0.0.1",
+  "dependencies": {
+    "mkdirp": "~0.5.0",
+    "dustjs-linkedin": "2.7.2",
+    "dustjs-helpers": "1.7.3"
+  }
+}

@@ -1,14 +1,14 @@
 @(title: String)(content: Html)
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <meta name="viewport" content="width=480">
-    </head>
-    <body>
-        @content
-        <script data-main="@routes.Assets.at("js/main.js")" type="text/javascript" src="@routes.Assets.at("lib/requirejs/require.js")"></script>
-    </body>
+  <head>
+    <title>@title</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <meta name="viewport" content="width=480">
+  </head>
+  <body>
+    @content
+    <script data-main="@routes.Assets.versioned("js/main.js")" type="text/javascript" src="@routes.Assets.versioned("lib/requirejs/require.js")"></script>
+  </body>
 </html>

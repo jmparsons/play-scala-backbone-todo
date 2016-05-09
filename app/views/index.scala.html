@@ -1,4 +1,4 @@
-@(message: String, todos: List[Todo], todoForm: Form[Todo])
+@(message: String, todos: List[Todo], todoForm: Form[Todo])(implicit messages: Messages)
 
 @main("Todos") {
 
@@ -6,7 +6,9 @@
 
   <div class="todos">
 
-    <div class="todolist"></div>
+    <div class="todolist">
+      <ul></ul>
+    </div>
 
     @helper.form(action = routes.TodoController.createTodo, 'class -> "todoform") {
       @helper.inputText(todoForm("content"), '_label -> "", 'placeholder -> "What do you need to do?")

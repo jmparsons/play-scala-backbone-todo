@@ -1,52 +1,42 @@
 package controllers
 
+import javax.inject.{Inject, Singleton}
 import play.api._
 import play.api.mvc._
-import play.api.Play._
-import play.api.libs.json._
 import play.api.data._
-import play.api.data.Forms._
-import play.api.db.slick._
-import play.api.Play.current
+import play.api.libs.json._
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import scala.concurrent.Future
 import models._
 
-object TodoController extends Controller {
+@Singleton
+class TodoController @Inject() (Todos: Todos) extends Controller {
 
-  val todoForm = Form(
-    mapping(
-      "id" -> optional(longNumber),
-      "content" -> nonEmptyText
-    )(Todo.apply)(Todo.unapply)
-  )
-
-  def index = DBAction { implicit rs =>
-    Ok(Json.toJson(Todos.all()))
+  def index = Action.async { implicit rs =>
+    Todos.all().map(todos => Ok(Json.toJson(todos)))
   }
 
-  def todoList(id: Long) = DBAction { implicit rs =>
-    Ok(Json.toJson(Todos.findById(id)))
+  def todoList(id: Long) = Action.async { implicit rs =>
+    Todos.findById(id).map(todo => Ok(Json.toJson(todo)))
   }
 
-  def createTodo = DBAction(parse.json) { implicit rs =>
-    rs.body.validate[Todo].map {
-      case (todo) => Ok(Json.toJson(Todos.findById(Todos.create(Todo(None, todo.content.trim)))))
-    }.recoverTotal {
-      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
-    }
+  def createTodo = Action.async(parse.json) { implicit rs =>
+    rs.body.validate[Todo].fold(
+      errors => Future.successful(BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))),
+      todo => Todos.create(Todo(None, todo.content.trim)).map(todo => Ok(Json.toJson(todo)))
+    )
   }
 
-  def updateTodo(id: Long) = DBAction(parse.json) { implicit rs =>
-    rs.body.validate[Todo].map {
-      case (todo) => Ok(Json.toJson(Todos.update(id, Todo(todo.id, todo.content.trim))))
-    }.recoverTotal {
-      e => BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toFlatJson(e)))
-    }
+  def updateTodo(id: Long) = Action.async(parse.json) { implicit rs =>
+    rs.body.validate[Todo].fold(
+      errors => Future.successful(BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))),
+      todo => Todos.update(Todo(Some(id), todo.content.trim)).map(todo => Ok(Json.toJson(todo)))
+    )
   }
 
-  def deleteTodo(id: Long) = DBAction { implicit rs =>
-    (Todos.delete(id) == 1) match {
-      case true => Ok(Json.obj("status" ->"OK", "message" -> ("Record deleted successfully.")))
-      case _ => BadRequest(Json.obj("status" ->"KO", "message" -> "Record does not exist."))
+  def deleteTodo(id: Long) = Action.async { implicit rs =>
+    Todos.delete(id).map { result =>
+      Ok(Json.obj("status" ->"OK", "message" -> ("Record deleted.")))
     }
   }
 

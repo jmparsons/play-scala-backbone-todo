@@ -1,9 +1,10 @@
 require.config
   paths:
-    jquery: "../lib/jquery/jquery"
-    backbone: "../lib/backbonejs/backbone"
-    underscore: "../lib/underscorejs/underscore"
-    dust: "../lib/dustjs-linkedin/dust-core"
+    jquery: "../lib/jquery/dist/jquery"
+    backbone: "../lib/backbone/backbone"
+    underscore: "../lib/underscore/underscore"
+    dust: "../lib/dustjs-linkedin/dist/dust-full"
+    dustHelpers: "../lib/dustjs-helpers/dist/dust-helpers"
     todoitem: "../templates/todoitem"
   shim:
     backbone:
@@ -13,10 +14,12 @@ require.config
       exports: "_"
     jquery:
       exports: "$"
-    todoitem:
+    dustHelpers:
       deps: ["dust"]
+    todoitem:
+      deps: ["dust", "dustHelpers"]
 
-require ["app", "router", "jquery", "backbone", "underscore", "dust"], (app, Router, $, Backbone, _) ->
+require ["app", "router"], (app, Router) ->
 
   app.router = new Router()
   Backbone.history.start

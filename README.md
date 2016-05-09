@@ -1,4 +1,4 @@
-# Play 2.3.x Todo list example app
+# Play 2.5.x Todo list example app
 A Todo list application built on [Play Framework](http://www.playframework.com) (Scala), [Slick](http://slick.typesafe.com/), [Webjars](https://github.com/webjars), [Backbone](http://backbonejs.org), [RequireJS](http://requirejs.org), [CoffeeScript](http://coffeescript.org) and [Dustjs](http://linkedin.github.io/dustjs/) using the H2 in-memory database.
 
 ## Features
@@ -11,7 +11,27 @@ A Todo list application built on [Play Framework](http://www.playframework.com) 
 7. Has front and backend validation returning JsObjects.
 8. In-line editing from Play Framework Zentasks sample application.
 
+Run:
+
+```scala
+npm install
+activator run
+```
+
 ## Changelog
+
+May 8, 2016 (7.0)
+
+- Updated to Play 2.5.3 and sbt to 0.13.11
+- Updated [sbt-dustjs-linkedin](https://github.com/jmparsons/sbt-dustjs-linkedin) to 1.0.4 with new `package.json` build
+- Updated [play-slick](https://github.com/playframework/play-slick) to 2.0.0 with evolutions
+- Updated all of the sbt plugins to latest version
+- Updated links to dist libraries from webjar bower packages
+- Removed all DBAction calls, now using Futures for all database access calls
+- Cleaned up coffeescript, imports, and self referencing
+- Now using fold with errors instead of map to handle parsing json
+- Added specs2 tests and updated Selenium Firefox test
+- Added jenv java-version file
 
 August 5, 2014 (6.0)
 
